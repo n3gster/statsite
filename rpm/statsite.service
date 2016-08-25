@@ -1,11 +1,11 @@
 [Unit]
 Description=statsite stats aggregator
+After=network.target
 
 [Service]
 Type=forking
 User=statsite
 Group=statsite
-RuntimeDirectory=/var/run/statsite
 PIDFile=/var/run/statsite/statsite.pid
 ExecStart=/usr/sbin/statsite -f /etc/statsite/statsite.conf
 Restart=on-failure
