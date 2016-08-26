@@ -82,14 +82,15 @@ Estimation Algorithm".
 Install
 -------
 
-Download and build from source. This requires `scons` to be available,
+Download and build from source. This requires `autoconf`, `automake` and `libtool` to be available,
 available usually through a system package manager. Steps:
 
     $ git clone https://github.com/armon/statsite.git
     $ cd statsite
-    $ pip install --egg SCons  # Uses the Scons build system, may not be necessary
+    $ ./bootstrap.sh
+    $ ./configure
     $ make
-    $ ./statsite
+    $ ./src/statsite
 
 Building the test code may generate errors if libcheck is not available.
 To build the test code successfully, do the following::
@@ -118,7 +119,7 @@ Here is an example configuration file::
     flush_interval = 10
     timer_eps = 0.01
     set_eps = 0.02
-    stream_cmd = python sinks/graphite.py localhost 2003
+    stream_cmd = python sinks/graphite.py localhost 2003 statsite
 
     [histogram_api]
     prefix=api

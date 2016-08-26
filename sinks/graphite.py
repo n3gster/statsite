@@ -27,12 +27,12 @@ class GraphiteStore(object):
         if attempts < 1:
             raise ValueError("Must have at least 1 attempt!")
 
+        self.logger = logging.getLogger("statsite.graphitestore")
         self.host = host
         self.port = port
         self.prefix = prefix
         self.attempts = attempts
         self.sock = self._create_socket()
-        self.logger = logging.getLogger("statsite.graphitestore")
 
     def flush(self, metrics):
         """
@@ -57,7 +57,7 @@ class GraphiteStore(object):
         # Serialize writes to the socket
         try:
             self._write_metric(data)
-        except:
+        except Exception:
             self.logger.exception("Failed to write out the metrics!")
 
     def close(self):
@@ -68,7 +68,7 @@ class GraphiteStore(object):
         try:
             if self.sock:
                 self.sock.close()
-        except:
+        except Exception:
             self.logger.warning("Failed to close connection!")
 
     def _create_socket(self):
@@ -76,7 +76,7 @@ class GraphiteStore(object):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             sock.connect((self.host, self.port))
-        except:
+        except Exception:
             self.logger.error("Failed to connect!")
             sock = None
         return sock
